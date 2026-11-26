@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RL Salón de Belleza</title>
+<meta name="theme-color" content="#3a0a20">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Figtree:wght@400;600;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#3a0a20;--bg2:#220614;--pink:#f3a6bf;--pink2:#e07a9f;--ink:#2a0615;--white:#fff;--soft:#f6dbe5;
+--serif:"Instrument Serif",Georgia,serif;--disp:"Syne",system-ui,sans-serif;--body:"Figtree",system-ui,sans-serif;
+color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--white);font-family:var(--body);line-height:1.5;
+background:var(--bg) radial-gradient(rgba(243,166,191,.28) 1.5px,transparent 1.6px) 0 0/26px 26px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:560px;margin:0 auto;padding:0 18px 40px}
+.top{display:flex;align-items:center;gap:12px;padding:16px 0}
+.logo{width:48px;height:48px;border-radius:14px;background:var(--pink);color:var(--ink);display:grid;place-items:center;font:800 18px var(--disp);border:2px solid var(--ink)}
+.top b{font:800 20px var(--disp)}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+nav a{padding:10px 16px;border-radius:999px;font-weight:600;white-space:nowrap}
+nav a.on{background:rgba(255,255,255,.14)}
+.sec{display:none}.sec.on{display:block}
+.serif{font:italic 400 1.05em var(--serif)}
+h1,h2{font-family:var(--disp);font-weight:800;line-height:1.05;margin:0}
+.hero{text-align:center;position:relative;padding:8px 0 4px}
+.stick{display:inline-block;background:var(--pink);color:var(--ink);border:3px solid var(--white);border-radius:22px;padding:8px 18px;font:800 16px var(--disp);transform:rotate(-3deg);margin:6px 0}
+.stick small{display:block;font:600 12px var(--body)}
+.bubble{display:inline-block;background:var(--soft);color:var(--ink);border-radius:18px;padding:5px 14px;font:italic 400 18px var(--serif);transform:rotate(-8deg)}
+.face{width:190px;height:230px;margin:10px auto;border-radius:90px 90px 24px 24px;background:linear-gradient(160deg,var(--pink),var(--pink2));border:4px solid var(--white);display:grid;place-items:center;font-size:64px;position:relative}
+.badge{position:absolute;left:-46px;bottom:12px;background:var(--soft);color:var(--ink);width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font:italic 400 19px/1 var(--serif);transform:rotate(-10deg)}
+.name{font:italic 400 clamp(46px,14vw,70px)/1 var(--serif);margin:6px 0}
+.tag{font-size:18px;color:var(--soft);margin:8px 0 20px}
+.chunk{background:var(--white);color:var(--ink);border:3px solid var(--ink);border-radius:30px;box-shadow:8px 8px 0 var(--pink)}
+.collage{position:relative;display:grid;grid-template-columns:1fr 1fr;height:190px;overflow:hidden;border-radius:26px;margin-bottom:30px}
+.collage div{display:grid;place-items:center;font-size:44px}
+.collage div:first-child{background:linear-gradient(150deg,#c98aa4,#7a2a4d)}
+.collage div:last-child{background:linear-gradient(150deg,#f3d6a8,#a8764f)}
+.cta{position:absolute;left:14px;bottom:14px;background:var(--pink);color:var(--ink);border:3px solid var(--ink);border-radius:999px;padding:10px 22px;font:italic 400 28px var(--serif);transform:rotate(-2deg);box-shadow:3px 3px 0 var(--ink)}
+.three{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:8px 0 26px}
+.mini{padding:8px 8px 12px;text-align:center;border-radius:24px;box-shadow:5px 5px 0 var(--pink)}
+.mini i{display:grid;place-items:center;height:96px;border-radius:16px;background:linear-gradient(150deg,var(--pink),var(--pink2));font-size:34px;font-style:normal}
+.mini span{display:block;font:italic 400 20px/1.1 var(--serif);margin-top:8px}
+.round{display:flex;justify-content:center;gap:16px;margin:10px 0 24px}
+.round a{width:68px;height:68px;border-radius:50%;background:var(--white);color:var(--bg);border:3px solid var(--ink);box-shadow:4px 4px 0 var(--pink);display:grid;place-items:center;font-size:28px}
+.info{background:var(--bg2);border-radius:22px;padding:8px 18px;text-align:center}
+.info div{padding:12px 0;font-size:17px}
+.pill{display:inline-block;padding:10px 20px;border-radius:999px;border:2px solid rgba(255,255,255,.7);font-weight:700}
+.pb{background:var(--pink);color:var(--ink);border-color:var(--pink)}
+h2{font-size:clamp(30px,9vw,42px);margin:22px 0 10px}
+.lead{color:var(--soft);font-size:18px;margin:0 0 18px}
+.steps{display:flex;gap:8px;margin:16px 0}
+.steps span{flex:1;text-align:center;padding:12px;border-radius:999px;background:rgba(255,255,255,.13);font-weight:700}
+.steps .on{flex:2;background:var(--pink);color:var(--ink)}
+.svc{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:16px;margin-bottom:22px}
+.svc .ph{height:140px;border-radius:18px;background:linear-gradient(150deg,var(--pink),var(--pink2));display:grid;place-items:center;font-size:34px}
+.svc h3{font:italic 400 30px/1 var(--serif);margin:0 0 6px}
+.svc p{margin:0 0 8px;color:#6b4557;font-size:15px}
+.meta{border:2px solid var(--soft);border-radius:14px;padding:8px 12px;font-size:14px;margin-bottom:10px}
+.meta b{display:block;font:italic 700 11px var(--body);letter-spacing:.04em;color:#7a1f4d}
+.price{display:inline-block;background:var(--pink2);border:3px solid var(--ink);border-radius:999px;padding:6px 16px;font:800 18px var(--disp);margin-bottom:10px}
+.pick{display:block;text-align:center;background:var(--pink);border:3px solid var(--ink);box-shadow:0 5px 0 var(--ink);border-radius:999px;padding:11px;font-weight:700}
+.course{padding:16px;margin-bottom:22px}
+.course .ph{height:190px;border-radius:20px;background:linear-gradient(150deg,#c98aa4,#7a2a4d);display:grid;place-items:center;font-size:54px}
+.lvl{display:inline-block;background:var(--pink2);border-radius:999px;padding:7px 14px;font-weight:700;margin:14px 0 4px}
+.course h3{font:800 28px/1.1 var(--disp);margin:6px 0}
+.course ul{padding-left:18px;color:#4c2a3a}
+.big{font:800 34px var(--disp)}
+.wide{display:block;text-align:center;background:var(--pink);border-radius:999px;padding:14px;font-weight:700;margin-top:12px}
+.prices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.back{display:inline-block;margin:6px 0 4px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:600}.svc .pick+.pick{margin-top:8px}.prices .price{margin-bottom:0}
+a:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="logo" aria-hidden="true">RL</div><b>RL Salón de Belleza</b></div>
+  <nav aria-label="Secciones">
+    <a href="#inicio" data-v="inicio">Inicio</a><a href="#turnos" data-v="turnos">Turnos</a><a href="#cursos" data-v="cursos">Cursos</a><a href="#tienda" data-v="tienda">Tienda</a>
+  </nav>
+
+  <section class="sec on" id="v-inicio">
+    <div class="hero">
+      <span class="bubble">vení a conocerme</span> <span class="stick">📍 Las Playas<small>Villa María</small></span>
+      <div class="face" role="img" aria-label="Foto de la trenzadora (reemplazar)">💗<span class="badge">+X años creando ✨</span></div>
+      <div class="name">Rocío Lindón</div>
+      <p class="tag">Trenzas hechas con técnica y cariño, a tu medida.</p>
+    </div>
+    <div class="chunk collage"><div role="img" aria-label="Foto de trabajo 1">💇‍♀️</div><div role="img" aria-label="Foto de trabajo 2">✨</div><a class="cta" href="#turnos">Reservar turno ✨</a></div>
+    <div class="three">
+      <a class="chunk mini" href="#cursos"><i>🎓</i><span>Cursos</span></a>
+      <a class="chunk mini" href="#turnos"><i>💗</i><span>Nuestras trenzas</span></a>
+      <a class="chunk mini" href="#turnos"><i>📅</i><span>Turnos</span></a>
+      <a class="chunk mini" href="#tienda"><i>🛍️</i><span>Tienda</span></a>
+    </div>
+    <div class="round"><a href="https://wa.me/5493534171796" aria-label="WhatsApp">💬</a></div>
+    <div class="info"><div><b>WhatsApp 353 417-1796</b></div><div>📍 Victorino de la Plaza 2669, Las Playas, Villa María</div></div>
+  </section>
+
+  <section class="sec" id="v-turnos">
+    <h2>Reservá tu <span class="serif">turno</span> 💗</h2>
+    <p class="lead">Elegí tu look, mirá los valores y reservá. Te dejamos el mensaje listo para enviarnos por WhatsApp.</p>
+    <div class="steps"><span class="on">1 Servicio</span><span>2</span><span>3</span></div>
+    <h2>¿Qué te querés <span class="serif">hacer</span>? ✂️</h2>
+    <p class="lead">Elegí el servicio que más te guste.</p>
+
+    <article class="chunk svc"><div class="ph">🖤</div><div><h3>Africanas clásicas</h3><p>Pegadas al cuero cabelludo, divisiones en cuadritos.</p>
+      <div class="meta"><b>TIEMPO APROX.</b>4 a 5 h</div><span class="price">$115.000</span>
+      <a class="pick" href="#box-braids">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">💫</div><div><h3>Africanas frontales</h3><p>Diseño adelante y trenzas sueltas atrás.</p>
+      <div class="meta"><b>TIEMPO APROX.</b>4 a 6 h</div><span class="price">desde $130.000</span>
+      <a class="pick" href="#fulani">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">🌀</div><div><h3>Bohemias</h3><p>Trenzas africanas con mechones de rulos sueltos.</p>
+      <div class="meta"><b>TIEMPO APROX.</b>4 a 6 h</div><span class="price">desde $130.000</span>
+      <a class="pick" href="#gypsy-braids">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">🌺</div><div><h3>Bohemias frontales</h3><p>Diseño al frente y trenzas sueltas con rulos atrás.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="#gypsy-fulani">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">✨</div><div><h3>Extensiones</h3><p>Microtrenzas con kanekalon, livianas para tu pelo.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="#extensiones">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">🥊</div><div><h3>Boxing braids</h3><p>Entre dos y seis trenzas gruesas, lisas o con diseño.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="#boxing-braids">Ver opciones ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">✂️</div><div><h3>Trenzas en pelo corto</h3><p>Cornrows para pelo corto, con o sin extensiones.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20turno%20para%20trenzas%20en%20pelo%20corto">Elegir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">👑</div><div><h3>Peinados sociales</h3><p>Peinados para fiestas y eventos.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20turno%20para%20peinado%20social">Elegir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">🍒</div><div><h3>Tratamientos capilares</h3><p>Alisado definitivo o nutrición para tu pelo.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20turno%20para%20tratamiento%20capilar">Elegir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph">🌿</div><div><h3>Colocación de dreadlocks</h3><p>Colocamos tus dreads, en packs de 5 unidades.</p><span class="price">Valor a consultar</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20turno%20para%20colocaci%C3%B3n%20de%20dreadlocks">Elegir ✨</a></div></article>
+  </section>
+
+  <section class="sec" id="v-tienda">
+    <h2>Nuestra <span class="serif">tienda</span> 🛍️</h2>
+    <p class="lead">Accesorios para cuidar y lucir tus trenzas. Pedilos por WhatsApp.</p>
+
+    <article class="chunk svc"><div class="ph" role="img" aria-label="Foto del producto (reemplazar)">🧣</div><div><h3>Gorros durag</h3><p>Para cuidar y proteger tu peinado.</p><span class="price">$25.000</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20comprar%20un%20gorro%20durag">Pedir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph" role="img" aria-label="Foto del producto (reemplazar)">😴</div><div><h3>Gorros para dormir</h3><p>Sujetan la parte trasera donde van las trenzas.</p><span class="price">$30.000</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20comprar%20un%20gorro%20para%20dormir">Pedir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph" role="img" aria-label="Foto del producto (reemplazar)">🎀</div><div><h3>Coletas</h3><p>Hechas a mano.</p><span class="price">$35.000</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20comprar%20una%20coleta">Pedir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph" role="img" aria-label="Foto del producto (reemplazar)">🌀</div><div><h3>Extensiones con hebillas</h3><p>Hechas a mano, de rulos.</p><span class="price">$55.000</span>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20comprar%20extensiones%20con%20hebillas">Pedir ✨</a></div></article>
+
+    <article class="chunk svc"><div class="ph" role="img" aria-label="Foto del producto (reemplazar)">💎</div><div><h3>Accesorios para trenzas</h3><p>Chapitas de decoración para tus trenzas.</p><div class="prices"><span class="price">6X $2.000</span><span class="price">2X $4.000</span></div>
+      <a class="pick" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20comprar%20accesorios%20para%20trenzas">Pedir ✨</a></div></article>
+  </section>
+
+  <section class="sec" id="v-cursos">
+    <h2>Aprendé a <span class="serif">trenzar</span> conmigo 💗</h2>
+    <p class="lead">Clases presenciales, a tu ritmo y con mucha paciencia. Fechas y horarios a coordinar.</p>
+    <span class="pill pb">Ver cursos</span> <a class="pill" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20reservar%20cupo%20en%20el%20curso">Reservar cupo</a>
+    <article class="chunk course" style="margin-top:24px"><div class="ph" role="img" aria-label="Foto del curso (reemplazar)">🖤</div>
+      <span class="lvl">🌱 Nivel inicial</span>
+      <h3>Hacé tus primeras <span class="serif">box braids</span></h3>
+      <p style="color:#6b4557">Aprendé trenzas sueltas con extensiones.</p>
+      <ul><li>Tipos de pelo, materiales y marcas.</li><li>Divisiones simétricas y enganches sin dolor.</li><li>Práctica en cabeza de muestra y certificado.</li></ul>
+      <div class="big">$ — <small style="font:400 16px var(--body)">completar precio</small></div>
+      <a class="wide" style="color:var(--ink)" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20reservar%20cupo%20en%20el%20curso">Reservar cupo</a>
+    </article>
+
+    <article class="chunk course"><div class="ph" role="img" aria-label="Foto del curso (reemplazar)">🌀</div>
+      <span class="lvl">🌱 Nivel inicial</span>
+      <h3>Aprendé a hacer <span class="serif">cornrows</span></h3>
+      <p style="color:#6b4557">Trenzas cosidas pegadas a la cabeza, de cero a un trabajo prolijo.</p>
+      <ul><li>Técnica paso a paso y control de tensión.</li><li>Divisiones, diseños y precisión.</li><li>Práctica en cabeza de muestra.</li></ul>
+      <div class="big">$ — <small style="font:400 16px var(--body)">completar duración y precio</small></div>
+      <a class="wide" style="color:var(--ink)" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20reservar%20cupo%20en%20el%20curso%20de%20cornrows">Reservar cupo</a>
+    </article>
+
+    <article class="chunk course"><div class="ph" role="img" aria-label="Foto del curso (reemplazar)">✨</div>
+      <span class="lvl">🌱 Nivel intermedio</span>
+      <h3>Aprendé a colocar <span class="serif">microbraids</span></h3>
+      <p style="color:#6b4557">Taller de colocación de extensiones, de cero a un acabado prolijo.</p>
+      <ul><li>Evaluación del cabello y tipos de extensiones.</li><li>Técnica base paso a paso.</li><li>Sellado de puntas y corrección de errores comunes.</li></ul>
+      <div class="big">$ — <small style="font:400 16px var(--body)">completar duración y precio</small></div>
+      <a class="wide" style="color:var(--ink)" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20reservar%20cupo%20en%20el%20curso%20de%20microbraids">Reservar cupo</a>
+    </article>
+
+    <article class="chunk course"><div class="ph" role="img" aria-label="Foto del curso (reemplazar)">🎯</div>
+      <span class="lvl">🚀 Avanzado</span>
+      <h3>Perfeccioná tus <span class="serif">cornrows</span></h3>
+      <p style="color:#6b4557">Para trenzadoras que ya trabajan con cornrows. Clase individual.</p>
+      <ul><li>Diagnóstico de tu técnica: tensión, prolijidad y dirección.</li><li>Ergonomía y mejor agarre.</li><li>Organización del servicio y presupuesto.</li></ul>
+      <div class="big">$ — <small style="font:400 16px var(--body)">completar duración y precio</small></div>
+      <a class="wide" style="color:var(--ink)" href="https://wa.me/5493534171796?text=Hola!%20Quiero%20reservar%20cupo%20en%20el%20curso%20avanzado%20de%20cornrows">Reservar cupo</a>
+    </article>
+
+    <article class="chunk course" style="border-style:dashed"><div style="font-size:46px">📚</div>
+      <span class="lvl">🌙 Próximamente</span>
+      <h3>Cursos <span class="serif">online</span> a tu ritmo</h3>
+      <p style="color:#6b4557">Los estamos armando. Dejanos tus datos y te avisamos apenas estén disponibles.</p>
+      <a class="wide" style="color:var(--ink)" href="https://wa.me/5493534171796?text=Hola!%20Avisame%20cuando%20est%C3%A9n%20los%20cursos%20online">Avisame cuando estén 🔔</a>
+    </article>
+  </section>
+</div>
+<script>
+var V={'box-braids':{t:'africanas clásicas',q:'¿Qué <span class="serif">tamaño</span> de box braids querés?',l:'Pegadas al cuero cabelludo, divisiones en cuadritos.',o:[['Small','Trenzas finas','🖤'],['Medium','Grosor mediano','🖤'],['Jumbo','Trenzas gruesas','🖤'],['Box braids rulosas','Mitad y mitad','🌀']]},
+'fulani':{t:'africanas frontales (fulani)',q:'¿Qué <span class="serif">tamaño</span> de fulani querés?',l:'Cosidas adelante y sueltas atrás.',o:[['Small','Grosor fino','💫'],['Medium','Grosor mediano','💫']],s:['Diseño simple','Diseño complejo']},
+'gypsy-braids':{t:'bohemias (gypsy braids)',q:'¿Qué <span class="serif">tamaño</span> de gypsy braids querés?',l:'Sueltas, con rulos orgánicos.',o:[['Small','Trenzas finas','🌀'],['Medium','Grosor mediano','🌀'],['Jumbo','Trenzas gruesas','🌀']]},
+'gypsy-fulani':{t:'bohemias frontales (gypsy fulani)',q:'¿Qué <span class="serif">tamaño</span> de gypsy fulani querés?',l:'Cosidas adelante y rulos atrás.',o:[['Small','Grosor fino','🌺'],['Medium','Grosor mediano','🌺']]},
+'extensiones':{t:'extensiones',q:'¿Qué <span class="serif">extensiones</span> querés?',l:'Microbraids con kanekalon y tincel hair.',o:[['Microbraids, mezcla de tonos','Combinación de colores a elección.','✨'],['Microbraids, un solo tono','Un solo color a elección.','✨'],['Tincel hair','Hilos brillantes para sumar brillo.','🌟']]},
+'boxing-braids':{t:'boxing braids',q:'¿Cuántas <span class="serif">boxing braids</span> querés?',l:'Trenzas grandes, de a 2, 4 o 6.',o:[['De 2','Diseño simple','🥊'],['De 4','Diseño simple','🥊']],s:['Con extensiones','Sin extensiones']}};
+Object.keys(V).forEach(function(k){var d=V[k],h='<a class="back" href="#turnos">‹ Servicios</a><h2>'+d.q+'</h2><p class="lead">'+d.l+'</p>';
+d.o.forEach(function(o){var w=function(x){return 'https://wa.me/5493534171796?text='+encodeURIComponent('Hola! Quiero turno para '+d.t+' - '+o[0]+(x?' - '+x:''))};
+h+='<article class="chunk svc"><div class="ph">'+o[2]+'</div><div><h3>'+o[0]+'</h3><p>'+o[1]+'</p><span class="price">Valor a consultar</span>';
+if(d.s){d.s.forEach(function(x){h+='<a class="pick" href="'+w(x)+'">'+x+' ✨</a>'})}else{h+='<a class="pick" href="'+w()+'">Elegir ✨</a>'}
+h+='</div></article>'});
+var s=document.createElement('section');s.className='sec';s.id='v-'+k;s.dataset.parent='turnos';s.innerHTML=h;document.querySelector('.wrap').appendChild(s)});
+function show(){var v=(location.hash||'#inicio').slice(1);if(!document.getElementById('v-'+v))v='inicio';
+document.querySelectorAll('.sec').forEach(function(s){s.classList.toggle('on',s.id==='v-'+v)});
+document.querySelectorAll('nav a').forEach(function(a){a.classList.toggle('on',a.dataset.v===(document.getElementById('v-'+v).dataset.parent||v))});window.scrollTo(0,0)}
+addEventListener('hashchange',show);show();
+</script>
+</body>
+</html>
